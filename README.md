@@ -26,7 +26,7 @@ Skills are markdown files that teach AI assistants how to perform specific tasks
 
 ## Quick Start
 
-### Option 1: Clone the Repo (Recommended for Teams)
+### Option 1: Clone the Repo 
 
 ```bash
 # Clone to a shared location
@@ -47,58 +47,7 @@ curl -o .claude/skills/ai-data-report.md \
   https://raw.githubusercontent.com/theam/ai-studio-skills/main/skills/ai-data-report.md
 ```
 
-### Option 3: Use as Git Submodule (Best for Version Control)
-
-```bash
-# Add as submodule
-git submodule add https://github.com/theam/ai-studio-skills.git .claude/ai-studio-skills
-
-# Symlink skills folder
-ln -s ai-studio-skills/skills .claude/skills
-```
-
 ---
-
-## Team Setup Guide
-
-### 1. Fork or Clone the Repository
-
-For team customization, fork the repo to your organization:
-
-```bash
-# Fork via GitHub, then clone your fork
-git clone https://github.com/YOUR-ORG/ai-studio-skills.git
-```
-
-### 2. Add Team-Specific Skills
-
-Create new skills in the `skills/` directory following the [contribution guide](#adding-new-skills).
-
-### 3. Distribute to Projects
-
-**Option A: Centralized (recommended)**
-```bash
-# Each developer clones once
-git clone https://github.com/YOUR-ORG/ai-studio-skills.git ~/team-skills
-
-# Each project symlinks
-ln -s ~/team-skills/skills /project/.claude/skills
-```
-
-**Option B: Per-project submodule**
-```bash
-git submodule add https://github.com/YOUR-ORG/ai-studio-skills.git .claude/ai-studio-skills
-```
-
-### 4. Keep Skills Updated
-
-```bash
-# If using clone
-cd ~/team-skills && git pull
-
-# If using submodule
-git submodule update --remote
-```
 
 ---
 
@@ -311,55 +260,6 @@ git push origin add-my-skill
 # Open PR on GitHub
 ```
 
----
-
-## Skill Naming Conventions
-
-| Pattern | Example | Use Case |
-|---------|---------|----------|
-| `verb-noun.md` | `generate-report.md` | Simple, single-file skills |
-| `tool-action/` | `aifindr-evaluator/` | Complex skills with scripts |
-| `domain-task.md` | `e2e-testing-*.md` | Domain-specific skills |
-
----
-
-## Directory Structure
-
-```
-ai-studio-skills/
-├── README.md                           # This file
-├── skills/
-│   ├── ai-data-report.md               # Simple skill (single file)
-│   ├── aifindr-dataset-builder/        # Complex skill
-│   │   ├── SKILL.md
-│   │   ├── aifindr-dataset-builder.skill
-│   │   └── scripts/
-│   ├── aifindr-evaluator/
-│   │   ├── SKILL.md
-│   │   ├── aifindr-evaluator.skill
-│   │   └── scripts/
-│   └── e2e-testing-knowledge-base/
-│       ├── SKILL.md
-│       └── references/
-```
-
----
-
-## Best Practices for Writing Skills
-
-### DO:
-- Be explicit and step-by-step
-- Include example commands and outputs
-- Specify prerequisites upfront
-- Add troubleshooting sections
-- Use tables for structured information
-- Include verification steps
-
-### DON'T:
-- Assume the AI knows project-specific details
-- Skip error handling instructions
-- Write vague instructions like "do the thing"
-- Forget to document required environment variables
 
 ---
 
@@ -374,31 +274,5 @@ When updating existing skills:
 
 ---
 
-## Roadmap
 
-- [ ] Auto-sync reports to Notion
-- [ ] Cost tracking per AI session
-- [ ] Learnings/takeaways section in reports
-- [ ] Compare AI time vs estimated manual time
-- [ ] Skill versioning system
-- [ ] Skill dependency management
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Add or modify skills following the [template](#2-use-the-skill-template)
-4. Test thoroughly
-5. Submit a PR with clear description
-
----
-
-## License
-
-MIT
-
----
-
-Made with care by [The Agile Monkeys](https://theagilemonkeys.com)
+Made with love by [The AI Monkeys](https://theagilemonkeys.com)
