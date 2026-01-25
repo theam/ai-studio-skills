@@ -1,3 +1,8 @@
+---
+name: ai-data-report
+description: "Generates data-driven reports about the project. Use for initial project reports or session summaries."
+---
+
 # Skill: AI Data Report
 
 ## Description
