@@ -1,31 +1,29 @@
-# Mapa de la skill `product-analyst`
+# Skill Map
 
-Este paquete está organizado para ser **portable** (Codex + Claude Code) y para que el agente cargue **solo lo necesario**.
+Quick reference for what's where in this skill.
 
-## Referencias (cárgalas cuando toque)
-- `ceo-philosophy.md`  
-  Resumen operativo de la filosofía del CEO: producto de datos, delivery, medición y priorización.
+## Main File
+- `SKILL.md` — Core instructions for the AI. This is what gets loaded.
 
-- `frameworks.md`  
-  Frameworks ligeros (MVP, Build-Measure-Learn, RICE/ICE, JTBD, Opportunity Solution Tree, etc.).
+## Reference Files (in `references/`)
 
-- `question-bank.md`  
-  Banco de preguntas por categoría (usuario, negocio, datos, delivery, riesgos, etc.).
+| File | Purpose | When to Load |
+|------|---------|--------------|
+| `ceo-philosophy.md` | Core principles from leadership | When grounding in company values |
+| `frameworks.md` | Lightweight frameworks (OST, JTBD, RICE, Shape Up, etc.) | When explaining a specific framework |
+| `question-bank.md` | Power questions organized by situation | When needing targeted questions |
+| `research-sources.md` | Curated learning resources (YC, podcasts, blogs, etc.) | When engineer wants to learn more |
 
-- `research-sources.md`  
-  Fuentes recomendadas (YC, blogs, podcasts, canales) + cómo sintetizarlas sin humo.
+## Design Principles
 
-## Assets (plantillas para rellenar)
-Plantillas en `assets/templates/`:
-- `product-brief.md`
-- `hypothesis-and-metrics.md`
-- `data-plan.md`
-- `execution-plan.md`
-- `decision-log.md`
-- `weekly-sync.md`
+1. **The skill should work without loading references** for most conversations
+2. **Value first** — Don't interrogate before helping
+3. **Conversational** — Think out loud with the engineer
+4. **Lean artifacts** — One-pagers, not 20-page docs
 
-Ejemplos en `assets/examples/` (útiles para calibrar formato).
+## Legacy Files (Can Be Removed)
 
-## Scripts (opcionales)
-- `scripts/new-initiative.sh`: crea una carpeta de iniciativa con copias de plantillas.
-- `scripts/validate_artifacts.py`: validación simple de que los artefactos tienen secciones mínimas.
+The following were part of the old rigid framework and are no longer needed:
+- `assets/templates/` — Old templates (skill now generates lean artifacts inline)
+- `scripts/` — Automation for old workflow
+- `assets/examples/` — Examples for old templates
