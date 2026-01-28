@@ -1,40 +1,54 @@
 # product-analyst
 
-A skill that helps engineers think like product owners — understand the business, ask the right questions, find what to measure, and ship what matters.
+A skill that helps engineers become **10,000X engineers** — not by writing more code, but by writing the *right* code.
 
 ## What This Skill Does
 
-This skill acts as a **Product Thinking Coach** for engineers. It helps them:
+This skill acts as your **product thinking co-pilot**. It:
 
-- Understand *why* they're building something and *who* it's for
-- Ask the right questions to stakeholders and users
-- Connect their code to business outcomes
-- Prioritize when everything feels urgent
-- Know what to measure to validate their work
+1. **Delivers immediate value** — No interrogation, no 12 questions. You get a quick win right away.
+2. **Removes work** — Identifies things you can skip, simplify, or defer
+3. **Quantifies impact** — Every insight connects to time saved, cost reduced, or metrics moved
+4. **Asks at most 1-2 questions** — Open-ended, only when needed for deeper value
 
-**Philosophy:** Engineers are the biggest source of innovation on product teams. But to innovate, they need to understand the problem deeply — not just receive specs.
+## When It Activates
 
-## How It Works
+The skill engages when you:
 
-Unlike rigid frameworks that require answering 10+ questions before getting value, this skill:
+- Start a new task
+- Define a feature
+- Feel stuck on prioritization
+- Question whether something is worth building
+- Are about to write significant code
 
-1. **Starts with value** — Provides insights based on whatever context is shared
-2. **Thinks out loud** — Models product thinking by reasoning through problems together
-3. **Asks questions that unlock thinking** — Each question reveals blind spots or challenges assumptions
-4. **Adapts to the situation** — Discovery, shaping, measurement, or triage mode
+## How It Responds
 
-## Structure
+**The first response is always a gift, not an interview.**
+
+Example:
 
 ```
-product-analyst/
-├── SKILL.md              # Main skill instructions
-├── README.md             # This file
-└── references/
-    ├── ceo-philosophy.md # Core principles from leadership
-    ├── frameworks.md     # Lightweight frameworks (OST, JTBD, RICE, etc.)
-    ├── question-bank.md  # Power questions for different situations
-    └── resources.md      # Curated learning resources
+You: "I need to add caching to improve API performance"
+
+Skill: Before adding caching, check if the bottleneck is actually
+the API. If 80% of latency is in the frontend render, caching
+won't help — and you'll add complexity for nothing.
+
+**Impact:** If the bottleneck is elsewhere, you just saved
+yourself a week of cache invalidation headaches.
+
+What does the latency breakdown look like right now?
 ```
+
+## The 10,000X Mindset
+
+> The best engineers aren't the ones who write the most code. They're the ones who figure out what NOT to build, validate assumptions fast, and ship the smallest thing that creates real value.
+
+Every feature you don't build is:
+- Bugs you don't fix
+- Code you don't maintain
+- Complexity you don't explain
+- Time you invest in what actually matters
 
 ## Installation
 
@@ -47,6 +61,19 @@ product-analyst/
 - Repo-scoped: `.codex/skills/product-analyst/`
 - User-scoped: `~/.codex/skills/product-analyst/`
 - Invoke with: `$product-analyst`
+
+## Structure
+
+```
+product-analyst/
+├── skill.md              # Main skill instructions
+├── README.md             # This file
+└── references/           # Supporting knowledge (loaded when needed)
+    ├── ceo-philosophy.md
+    ├── frameworks.md
+    ├── question-bank.md
+    └── research-sources.md
+```
 
 ## Example Use Cases
 
@@ -77,4 +104,4 @@ From the best operators in the industry:
 
 ## License
 
-Internal use. Adjust as needed.
+Internal use.
