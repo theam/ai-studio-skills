@@ -21,8 +21,6 @@ Quick reference for what's where in this skill.
 The skill can connect to Notion to fetch real project context (objectives, KPIs, user personas, roadmaps). This makes advice much more specific and valuable.
 
 **Setup required by the user:**
-You probably don't need to actively do anything. First time Jax tries to use Notion it will ask you to install it and 
-guide you through the installation. If not, then do as with others MCPs:
 1. Install and configure the Notion MCP in Claude Code
 2. Connect it to the workspace containing project documentation
 

@@ -65,6 +65,8 @@ The skill is **much more powerful** when connected to your team's Notion workspa
 - Align suggestions with your current roadmap and priorities
 
 **Setup:**
+0. You probably don't need to actively do anything. First time Jax tries to use Notion it will ask you to install it and
+   guide you through the installation. If not, then follow the (usual) steps for MCP:
 1. Install the [Notion MCP](https://github.com/makenotion/notion-mcp-server) in Claude Code
 2. Connect it to the workspace where your project documentation lives
 3. Jax will automatically detect your project and fetch relevant context
