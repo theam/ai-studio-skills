@@ -50,6 +50,27 @@ Every feature you don't build is:
 - Complexity you don't explain
 - Time you invest in what actually matters
 
+## Requirements
+
+### Required
+- Claude Code or Codex
+
+### Recommended: Notion MCP
+
+The skill is **much more powerful** when connected to your team's Notion workspace. With Notion, Jax can:
+
+- Pull real business objectives and OKRs for your project
+- Reference actual user personas and target audience
+- Ground advice in your specific KPIs and success metrics
+- Align suggestions with your current roadmap and priorities
+
+**Setup:**
+1. Install the [Notion MCP](https://github.com/makenotion/notion-mcp-server) in Claude Code
+2. Connect it to the workspace where your project documentation lives
+3. Jax will automatically detect your project and fetch relevant context
+
+**Without Notion:** The skill still works great — it just asks you for context instead of pulling it automatically.
+
 ## Installation
 
 **Claude Code:**
