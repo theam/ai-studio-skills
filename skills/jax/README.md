@@ -1,4 +1,4 @@
-# product-analyst
+# jax
 
 A skill that helps engineers become **10,000X engineers** — not by writing more code, but by writing the *right* code.
 
@@ -30,7 +30,7 @@ Example:
 ```
 You: "I need to add caching to improve API performance"
 
-Skill: Before adding caching, check if the bottleneck is actually
+Jax: Before adding caching, check if the bottleneck is actually
 the API. If 80% of latency is in the frontend render, caching
 won't help — and you'll add complexity for nothing.
 
@@ -53,19 +53,19 @@ Every feature you don't build is:
 ## Installation
 
 **Claude Code:**
-- Project: `.claude/skills/product-analyst/`
-- Personal: `~/.claude/skills/product-analyst/`
-- Invoke with: `/product-analyst`
+- Project: `.claude/skills/jax/`
+- Personal: `~/.claude/skills/jax/`
+- Invoke with: `/jax`
 
 **Codex:**
-- Repo-scoped: `.codex/skills/product-analyst/`
-- User-scoped: `~/.codex/skills/product-analyst/`
-- Invoke with: `$product-analyst`
+- Repo-scoped: `.codex/skills/jax/`
+- User-scoped: `~/.codex/skills/jax/`
+- Invoke with: `$jax`
 
 ## Structure
 
 ```
-product-analyst/
+jax/
 ├── skill.md              # Main skill instructions
 ├── README.md             # This file
 └── references/           # Supporting knowledge (loaded when needed)
