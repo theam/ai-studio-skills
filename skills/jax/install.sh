@@ -46,11 +46,6 @@ fi
 FILES=(
     "SKILL.md"
     "README.md"
-    "references/00-skill-map.md"
-    "references/ceo-philosophy.md"
-    "references/frameworks.md"
-    "references/question-bank.md"
-    "references/research-sources.md"
 )
 
 # Function to install skill to a directory
@@ -61,7 +56,7 @@ install_to_dir() {
     echo -e "${BLUE}Installing to $name...${NC}"
 
     # Create directory
-    if ! mkdir -p "$dir/references" 2>/dev/null; then
+    if ! mkdir -p "$dir" 2>/dev/null; then
         echo -e "${RED}  ✗ Failed to create directory $dir${NC}"
         echo -e "${RED}    Check write permissions for $(dirname "$dir")${NC}"
         return 1

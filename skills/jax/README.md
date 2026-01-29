@@ -133,13 +133,9 @@ You can also invoke Jax anytime:
 
 ```
 jax/
-├── skill.md              # Main skill instructions
+├── SKILL.md              # Main skill instructions (all-in-one)
 ├── README.md             # This file
-└── references/           # Supporting knowledge (loaded when needed)
-    ├── ceo-philosophy.md
-    ├── frameworks.md
-    ├── question-bank.md
-    └── research-sources.md
+└── install.sh            # Installation script
 ```
 
 ## Example Use Cases
