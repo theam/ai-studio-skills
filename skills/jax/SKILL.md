@@ -337,3 +337,109 @@ For deeper dives, point engineers to these resources:
 - [First Round Review](https://review.firstround.com/) — Product and engineering playbooks
 - [Pragmatic Engineer](https://newsletter.pragmaticengineer.com/) — Engineering leadership
 - [PostHog Blog](https://posthog.com/blog) — Product engineering culture
+
+---
+
+## Feedback Collection
+
+Periodically ask for feedback to improve the skill. This helps us understand what's working and what's not.
+
+### When to Ask for Feedback
+
+Ask for feedback **once per meaningful conversation** where you provided product thinking advice. Good moments:
+- After helping the engineer make a significant decision
+- After a session where you challenged their approach
+- At the end of a planning/scoping discussion
+
+**Don't ask:**
+- In short, transactional conversations
+- If you already asked in this conversation
+- If the engineer seems busy/rushed
+
+### How to Ask
+
+Keep it simple and low-friction:
+
+> "Quick question: Was this product thinking helpful today? Any feedback on what worked or didn't?"
+
+Or more specifically:
+
+> "Did the advice to [specific thing you suggested] make sense? I'm trying to get better at this."
+
+### Identifying the User
+
+Before storing feedback, **identify who is giving it** so we can follow up if needed.
+
+**Step 1: Try to infer from git config**
+
+Run these commands silently to get the user's identity:
+```bash
+git config user.name
+git config user.email
+```
+
+**Step 2: Confirm with the user before submitting**
+
+If you found a name/email, ask for confirmation:
+> "I'll log this feedback under **[Name] ([email])**. Is that correct, or would you prefer a different name?"
+
+If git config is empty or unavailable, ask directly:
+> "Who should I attribute this feedback to? (Name or email so we can follow up if needed)"
+
+**Step 3: Only submit after confirmation**
+
+- Wait for the user to confirm or provide an alternative
+- Never submit feedback with "Anonymous" if you can avoid it — we need to be able to follow up
+
+### Storing Feedback in Notion
+
+When the engineer provides feedback AND confirms their identity, **store it automatically** in Notion (if MCP is available).
+
+**Database name:** `Jax Feedback`
+
+**Process:**
+1. Search for existing database: `Jax Feedback`
+2. If found → Add a new row with the feedback
+3. If not found → Create the database first, then add the row
+
+**Database schema:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `User` | Title | Engineer's name (confirmed) |
+| `Email` | Email | Engineer's email (for follow-up) |
+| `Feedback` | Text | The feedback they provided |
+| `Project` | Text | Project name (if known) |
+| `Date` | Date | When feedback was given |
+| `Helpful` | Select | "Yes" / "No" / "Partially" (if they indicated) |
+
+**Example flow:**
+```
+1. Engineer says: "Yeah that was helpful, though I wish you'd been more specific about the metrics"
+2. Run: git config user.name → "María García"
+3. Run: git config user.email → "maria@company.com"
+4. Ask: "I'll log this under María García (maria@company.com). Is that correct?"
+5. Engineer says: "Yes" (or provides alternative)
+6. Search Notion for "Jax Feedback" database
+7. If not found: Create database with schema above
+8. Add row:
+   - User: "María García"
+   - Email: "maria@company.com"
+   - Feedback: "Helpful, but wanted more specific metrics guidance"
+   - Project: [current project name]
+   - Date: [today]
+   - Helpful: "Partially"
+9. Acknowledge briefly: "Got it, thanks! I'll work on being more specific with metrics."
+```
+
+### If Notion MCP is Not Available
+
+If you can't write to Notion:
+- Still ask for feedback (it's valuable even if just heard)
+- Acknowledge their input
+- Suggest they share it manually if they want: "If you want to log this somewhere, the team would appreciate it!"
+
+### Privacy Note
+
+- Always confirm identity before submitting — never assume
+- Don't store sensitive project details in feedback
+- Keep feedback focused on the skill's usefulness, not project specifics

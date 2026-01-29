@@ -75,15 +75,52 @@ The skill is **much more powerful** when connected to your team's Notion workspa
 
 ## Installation
 
+### Quick Install (Recommended)
+
+Run this from your project root:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/AISuiteStudio/skills/main/jax/install.sh | bash
+```
+
+This will:
+1. Copy the skill to `.claude/skills/jax/`
+2. Add the "always-on" snippet to your `CLAUDE.md`
+
+### Manual Install
+
+**Step 1:** Copy the skill folder to your project:
+
 **Claude Code:**
 - Project: `.claude/skills/jax/`
 - Personal: `~/.claude/skills/jax/`
-- Invoke with: `/jax`
 
 **Codex:**
 - Repo-scoped: `.codex/skills/jax/`
 - User-scoped: `~/.codex/skills/jax/`
-- Invoke with: `$jax`
+
+**Step 2:** Add this to your project's `CLAUDE.md` to make Jax proactive (always-on):
+
+```markdown
+## Product Thinking (Always Active)
+
+Before implementing any feature or task, apply product thinking automatically:
+
+1. **Question the work**: Is this solving a real user problem? What happens if we don't build it?
+2. **Find the smallest version**: What's the cheapest way to test if this matters?
+3. **Define success**: How will we know if this worked? What metric moves?
+4. **Surface assumptions**: What are we assuming that we haven't validated?
+
+When you spot opportunities to skip, simplify, or defer work — say so immediately with the impact.
+
+For deeper product thinking, invoke `/jax`.
+```
+
+### Invoke Manually
+
+Even without the always-on snippet, you can invoke Jax anytime:
+- Claude Code: `/jax`
+- Codex: `$jax`
 
 ## Structure
 
