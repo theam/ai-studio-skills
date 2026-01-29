@@ -395,12 +395,17 @@ If git config is empty or unavailable, ask directly:
 
 When the engineer provides feedback AND confirms their identity, **store it automatically** in Notion (if MCP is available).
 
+**Page name:** `Jax`
 **Database name:** `Jax Feedback`
 
 **Process:**
 1. Search for existing database: `Jax Feedback`
 2. If found → Add a new row with the feedback
-3. If not found → Create the database first, then add the row
+3. If not found:
+   a. Search for page named `Jax`
+   b. If page not found → Create page `Jax` in the workspace root
+   c. Create database `Jax Feedback` inside the `Jax` page
+   d. Add the feedback row
 
 **Database schema:**
 | Property | Type | Description |
@@ -420,7 +425,10 @@ When the engineer provides feedback AND confirms their identity, **store it auto
 4. Ask: "I'll log this under María García (maria@company.com). Is that correct?"
 5. Engineer says: "Yes" (or provides alternative)
 6. Search Notion for "Jax Feedback" database
-7. If not found: Create database with schema above
+7. If not found:
+   - Search for "Jax" page
+   - If no page: Create "Jax" page in workspace
+   - Create "Jax Feedback" database inside "Jax" page
 8. Add row:
    - User: "María García"
    - Email: "maria@company.com"
