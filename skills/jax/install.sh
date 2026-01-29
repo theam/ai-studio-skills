@@ -64,16 +64,15 @@ echo ""
 # CLAUDE.md snippet
 SNIPPET='## Product Thinking (Always Active)
 
-Before implementing any feature or task, apply product thinking automatically:
+Before implementing any feature or task, **always invoke `/jax`** to apply product thinking.
 
+This ensures you:
 1. **Question the work**: Is this solving a real user problem? What happens if we don'\''t build it?
 2. **Find the smallest version**: What'\''s the cheapest way to test if this matters?
 3. **Define success**: How will we know if this worked? What metric moves?
 4. **Surface assumptions**: What are we assuming that we haven'\''t validated?
 
-When you spot opportunities to skip, simplify, or defer work — say so immediately with the impact.
-
-For deeper product thinking, invoke `/jax`.'
+When you spot opportunities to skip, simplify, or defer work — say so immediately with the impact.'
 
 # Check if CLAUDE.md exists and already has the snippet
 if [[ -f "$CLAUDE_MD" ]]; then
