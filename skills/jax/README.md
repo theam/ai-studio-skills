@@ -77,29 +77,35 @@ The skill is **much more powerful** when connected to your team's Notion workspa
 
 ### Quick Install (Recommended)
 
-Run this from your project root:
+Run this from your **project root**:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AISuiteStudio/skills/main/jax/install.sh | bash
 ```
 
 This will:
-1. Copy the skill to `.claude/skills/jax/`
-2. Add the "always-on" snippet to your `CLAUDE.md`
+1. **Install the skill globally** (available in all projects):
+   - Claude Code: `~/.claude/skills/jax/`
+   - Codex: `~/.codex/skills/jax/`
+2. **Configure your current project** (optional, will ask):
+   - Add always-on snippet to `CLAUDE.md`
+   - Add always-on snippet to `CODEX.md`
 
 ### Manual Install
 
-**Step 1:** Copy the skill folder to your project:
+**Step 1:** Copy the skill folder to your home directory:
 
-**Claude Code:**
-- Project: `.claude/skills/jax/`
-- Personal: `~/.claude/skills/jax/`
+```bash
+# For Claude Code
+mkdir -p ~/.claude/skills/jax
+cp -r /path/to/jax/* ~/.claude/skills/jax/
 
-**Codex:**
-- Repo-scoped: `.codex/skills/jax/`
-- User-scoped: `~/.codex/skills/jax/`
+# For Codex
+mkdir -p ~/.codex/skills/jax
+cp -r /path/to/jax/* ~/.codex/skills/jax/
+```
 
-**Step 2:** Add this to your project's `CLAUDE.md` to make Jax proactive (always-on):
+**Step 2:** Add the always-on snippet to your project's `CLAUDE.md` and/or `CODEX.md`:
 
 ```markdown
 ## Product Thinking (Always Active)
@@ -115,9 +121,11 @@ This ensures you:
 When you spot opportunities to skip, simplify, or defer work — say so immediately with the impact.
 ```
 
+> **Note:** For Codex, use `$jax` instead of `/jax` in the snippet.
+
 ### Invoke Manually
 
-Even without the always-on snippet, you can invoke Jax anytime:
+You can also invoke Jax anytime:
 - Claude Code: `/jax`
 - Codex: `$jax`
 

@@ -1,19 +1,26 @@
 #!/bin/bash
 
 # Jax Skill Installer
-# Installs the Jax product thinking skill for Claude Code
+# Installs the Jax product thinking skill globally and configures the current project
 
 set -e
 
 SKILL_NAME="jax"
 SKILL_REPO="https://raw.githubusercontent.com/AISuiteStudio/skills/main/jax"
-SKILL_DIR=".claude/skills/$SKILL_NAME"
+
+# Install locations (user home directory - global for all projects)
+CLAUDE_SKILL_DIR="$HOME/.claude/skills/$SKILL_NAME"
+CODEX_SKILL_DIR="$HOME/.codex/skills/$SKILL_NAME"
+
+# Project config files (current directory)
 CLAUDE_MD="CLAUDE.md"
+CODEX_MD="CODEX.md"
 
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo ""
@@ -22,9 +29,11 @@ echo "  Jax - Product Thinking Skill Installer"
 echo "=========================================="
 echo ""
 
-# Check if we're in a project directory (has git, package.json, etc.)
+# Check if we're in a project directory
 if [[ ! -d ".git" && ! -f "package.json" && ! -f "pyproject.toml" && ! -f "Cargo.toml" ]]; then
     echo -e "${YELLOW}Warning: This doesn't look like a project root.${NC}"
+    echo "Run this script from your project's root directory to configure CLAUDE.md/CODEX.md"
+    echo ""
     read -p "Continue anyway? (y/N) " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -33,13 +42,7 @@ if [[ ! -d ".git" && ! -f "package.json" && ! -f "pyproject.toml" && ! -f "Cargo
     fi
 fi
 
-# Create skill directory
-echo "Creating skill directory..."
-mkdir -p "$SKILL_DIR/references"
-
-# Download skill files
-echo "Downloading skill files..."
-
+# Files to download
 FILES=(
     "SKILL.md"
     "README.md"
@@ -50,19 +53,57 @@ FILES=(
     "references/research-sources.md"
 )
 
-for file in "${FILES[@]}"; do
-    echo "  - $file"
-    curl -fsSL "$SKILL_REPO/$file" -o "$SKILL_DIR/$file" 2>/dev/null || {
-        echo -e "${RED}Failed to download $file${NC}"
-        exit 1
-    }
-done
+# Function to install skill to a directory
+install_to_dir() {
+    local dir="$1"
+    local name="$2"
 
-echo -e "${GREEN}Skill files installed successfully!${NC}"
+    echo -e "${BLUE}Installing to $name...${NC}"
+    mkdir -p "$dir/references"
+
+    for file in "${FILES[@]}"; do
+        curl -fsSL "$SKILL_REPO/$file" -o "$dir/$file" 2>/dev/null || {
+            echo -e "${RED}Failed to download $file${NC}"
+            return 1
+        }
+    done
+
+    echo -e "${GREEN}  ✓ Installed to $dir${NC}"
+    return 0
+}
+
+# ============================================
+# STEP 1: Install skill files globally
+# ============================================
+
+echo "Step 1: Installing skill files globally..."
 echo ""
 
-# CLAUDE.md snippet
-SNIPPET='## Product Thinking (Always Active)
+# Install to Claude Code
+if install_to_dir "$CLAUDE_SKILL_DIR" "Claude Code (~/.claude/skills/$SKILL_NAME)"; then
+    CLAUDE_OK=true
+else
+    CLAUDE_OK=false
+fi
+
+# Install to Codex
+if install_to_dir "$CODEX_SKILL_DIR" "Codex (~/.codex/skills/$SKILL_NAME)"; then
+    CODEX_OK=true
+else
+    CODEX_OK=false
+fi
+
+echo ""
+
+# ============================================
+# STEP 2: Configure project files
+# ============================================
+
+echo "Step 2: Configuring project files..."
+echo ""
+
+# Snippet to add
+SNIPPET_CLAUDE='## Product Thinking (Always Active)
 
 Before implementing any feature or task, **always invoke `/jax`** to apply product thinking.
 
@@ -74,51 +115,84 @@ This ensures you:
 
 When you spot opportunities to skip, simplify, or defer work — say so immediately with the impact.'
 
-# Check if CLAUDE.md exists and already has the snippet
-if [[ -f "$CLAUDE_MD" ]]; then
-    if grep -q "Product Thinking (Always Active)" "$CLAUDE_MD"; then
-        echo -e "${YELLOW}CLAUDE.md already has the product thinking snippet. Skipping.${NC}"
+SNIPPET_CODEX='## Product Thinking (Always Active)
+
+Before implementing any feature or task, **always invoke `$jax`** to apply product thinking.
+
+This ensures you:
+1. **Question the work**: Is this solving a real user problem? What happens if we don'\''t build it?
+2. **Find the smallest version**: What'\''s the cheapest way to test if this matters?
+3. **Define success**: How will we know if this worked? What metric moves?
+4. **Surface assumptions**: What are we assuming that we haven'\''t validated?
+
+When you spot opportunities to skip, simplify, or defer work — say so immediately with the impact.'
+
+# Function to update or create config file
+update_config_file() {
+    local file="$1"
+    local snippet="$2"
+    local tool_name="$3"
+
+    if [[ -f "$file" ]]; then
+        if grep -q "Product Thinking (Always Active)" "$file"; then
+            echo -e "${YELLOW}$file already has the product thinking snippet. Skipping.${NC}"
+        else
+            echo "Found existing $file."
+            read -p "Add always-on snippet to $file? (Y/n) " -n 1 -r
+            echo
+            if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+                echo "" >> "$file"
+                echo "$snippet" >> "$file"
+                echo -e "${GREEN}  ✓ Added snippet to $file${NC}"
+            else
+                echo "  Skipped $file"
+            fi
+        fi
     else
-        echo ""
-        echo "Found existing CLAUDE.md. Would you like to add the always-on snippet?"
-        echo "(This makes Jax proactive without needing to invoke /jax)"
-        echo ""
-        read -p "Add snippet to CLAUDE.md? (Y/n) " -n 1 -r
+        read -p "Create $file with always-on snippet? (Y/n) " -n 1 -r
         echo
         if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-            echo "" >> "$CLAUDE_MD"
-            echo "$SNIPPET" >> "$CLAUDE_MD"
-            echo -e "${GREEN}Added product thinking snippet to CLAUDE.md${NC}"
+            echo "# Project Instructions for $tool_name" > "$file"
+            echo "" >> "$file"
+            echo "$snippet" >> "$file"
+            echo -e "${GREEN}  ✓ Created $file${NC}"
         else
-            echo "Skipped. You can add it manually later (see README)."
+            echo "  Skipped $file"
         fi
     fi
-else
-    echo ""
-    echo "No CLAUDE.md found. Would you like to create one with the always-on snippet?"
-    echo "(This makes Jax proactive without needing to invoke /jax)"
-    echo ""
-    read -p "Create CLAUDE.md? (Y/n) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-        echo "# Project Instructions for Claude" > "$CLAUDE_MD"
-        echo "" >> "$CLAUDE_MD"
-        echo "$SNIPPET" >> "$CLAUDE_MD"
-        echo -e "${GREEN}Created CLAUDE.md with product thinking snippet${NC}"
-    else
-        echo "Skipped. You can create it manually later (see README)."
-    fi
-fi
+}
+
+# Update CLAUDE.md
+update_config_file "$CLAUDE_MD" "$SNIPPET_CLAUDE" "Claude"
+
+echo ""
+
+# Update CODEX.md
+update_config_file "$CODEX_MD" "$SNIPPET_CODEX" "Codex"
+
+# ============================================
+# DONE
+# ============================================
 
 echo ""
 echo "=========================================="
-echo -e "${GREEN}  Installation complete!${NC}"
+
+if [[ "$CLAUDE_OK" == true && "$CODEX_OK" == true ]]; then
+    echo -e "${GREEN}  Installation complete!${NC}"
+else
+    echo -e "${YELLOW}  Installation completed with warnings${NC}"
+fi
+
 echo "=========================================="
 echo ""
-echo "Usage:"
-echo "  - Jax is now always-on (if you added the snippet)"
-echo "  - For deeper analysis, type: /jax"
+echo "Skill installed globally (available in all projects):"
+echo "  - Claude Code: ~/.claude/skills/$SKILL_NAME/"
+echo "  - Codex: ~/.codex/skills/$SKILL_NAME/"
 echo ""
-echo "Optional: Install Notion MCP for even smarter advice"
+echo "Usage:"
+echo "  - Claude Code: /jax"
+echo "  - Codex: \$jax"
+echo ""
+echo -e "${BLUE}Optional: Install Notion MCP for smarter advice${NC}"
 echo "  See: https://github.com/makenotion/notion-mcp-server"
 echo ""
