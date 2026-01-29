@@ -6,7 +6,7 @@
 set -e
 
 SKILL_NAME="jax"
-SKILL_REPO="https://raw.githubusercontent.com/AISuiteStudio/skills/main/jax"
+SKILL_REPO="https://raw.githubusercontent.com/theam/ai-studio-skills/main/skills/jax"
 
 # Install locations (user home directory - global for all projects)
 CLAUDE_SKILL_DIR="$HOME/.claude/skills/$SKILL_NAME"
@@ -59,13 +59,29 @@ install_to_dir() {
     local name="$2"
 
     echo -e "${BLUE}Installing to $name...${NC}"
-    mkdir -p "$dir/references"
 
+    # Create directory
+    if ! mkdir -p "$dir/references" 2>/dev/null; then
+        echo -e "${RED}  ✗ Failed to create directory $dir${NC}"
+        echo -e "${RED}    Check write permissions for $(dirname "$dir")${NC}"
+        return 1
+    fi
+
+    # Download each file
     for file in "${FILES[@]}"; do
-        curl -fsSL "$SKILL_REPO/$file" -o "$dir/$file" 2>/dev/null || {
-            echo -e "${RED}Failed to download $file${NC}"
+        local url="$SKILL_REPO/$file"
+        local output="$dir/$file"
+        local error_output
+
+        error_output=$(curl -fsSL "$url" -o "$output" 2>&1)
+        local exit_code=$?
+
+        if [[ $exit_code -ne 0 ]]; then
+            echo -e "${RED}  ✗ Failed to download $file${NC}"
+            echo -e "${RED}    URL: $url${NC}"
+            echo -e "${RED}    Error: $error_output${NC}"
             return 1
-        }
+        fi
     done
 
     echo -e "${GREEN}  ✓ Installed to $dir${NC}"

@@ -80,7 +80,7 @@ The skill is **much more powerful** when connected to your team's Notion workspa
 Run this from your **project root**:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/AISuiteStudio/skills/main/jax/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/theam/ai-studio-skills/main/skills/jax/install.sh | bash
 ```
 
 This will:
